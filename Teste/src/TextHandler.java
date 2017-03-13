@@ -8,8 +8,9 @@ public class TextHandler {
 	public void test() {
 		int wordCount = 0;
 		int pipeCount = 0;
+		int digitCount = 0;
 		
-        String s = " 1979   Olá,      meu   nome  é raphael    ";
+        String s = " 1 9    79   Olá,      meu   nome  é raphael    ";
         String BuildText = "";
         boolean word = false;
         int endOfLine = s.length() - 1;
@@ -34,7 +35,13 @@ public class TextHandler {
                 if(pipeCount > 0)
                 	BuildText += "%"+String.valueOf(pipeCount)+"%";
                 pipeCount = 0;
-            } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
+            }else if (Character.isDigit(s.charAt(i))) {
+                digitCount++;
+                if(pipeCount > 0)
+                	BuildText += "%"+String.valueOf(pipeCount)+"%";
+                pipeCount = 0;
+                BuildText += s.charAt(i);                
+            }else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
                 wordCount++;
                 if(pipeCount > 0)
                 	BuildText += "%"+String.valueOf(pipeCount)+"%";
@@ -48,7 +55,9 @@ public class TextHandler {
             }
         }
         System.out.println("Quantidade de palavras: [" + String.valueOf(wordCount) + "]");
+        System.out.println("Quantidade de numeros: [" + String.valueOf(digitCount) + "]");
         System.out.println("Texto Concluido: [" + BuildText + "]");
+        System.out.println("Texto Inicial: [" + s + "]");
 
 	}
 
